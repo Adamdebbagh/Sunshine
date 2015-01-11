@@ -9,6 +9,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -61,6 +62,7 @@ public class MainActivity extends ActionBarActivity {
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
+            View rootView = inflater.inflate(R.layout.fragment_main, container, false);
 
             // Create some dummy data for the ListView.  Here's a sample weekly forecast
             String[] data = {
@@ -84,7 +86,9 @@ public class MainActivity extends ActionBarActivity {
                             R.id.list_item_forecast_textview, // The ID of the textview to populate.
                             weekForecast);
 
-            View rootView = inflater.inflate(R.layout.fragment_main, container, false);
+            // Get a reference to the ListView, and attach this adapter to it.
+            ListView listView = (ListView)rootView.findViewById(R.id.listview_forecast);
+            listView.setAdapter(forecastAdapter);
             return rootView;
         }
     }
