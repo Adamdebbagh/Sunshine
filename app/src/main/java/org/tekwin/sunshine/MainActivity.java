@@ -74,6 +74,16 @@ public class MainActivity extends ActionBarActivity {
             };
             List<String> weekForecast = new ArrayList<String>(Arrays.asList(data));
 
+            // initialize Array Adapter
+            // The ArrayAdapter will take data from a source (like our dummy forecast) and
+            // use it to populate the ListView it's attached to.
+            ArrayAdapter<String> forecastAdapter =
+                    new ArrayAdapter<String>(
+                            getActivity(), // The current context (this activity)
+                            R.layout.list_item_forcast, // The name of the layout ID.
+                            R.id.list_item_forecast_textview, // The ID of the textview to populate.
+                            weekForecast);
+
             View rootView = inflater.inflate(R.layout.fragment_main, container, false);
             return rootView;
         }
