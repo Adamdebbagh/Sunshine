@@ -33,6 +33,7 @@ import java.util.List;
 
 public class ForecastFragment extends Fragment {
 
+    private ArrayAdapter<String> mForecastAdapter;
     public ForecastFragment() {
     }
 
@@ -60,7 +61,7 @@ public class ForecastFragment extends Fragment {
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_refresh) {
 
-            FetchWeatherTask weatherTask = (FetchWeatherTask) new FetchWeatherTask().execute("94043");
+            FetchWeatherTask weatherTask = (FetchWeatherTask) new FetchWeatherTask().execute("20748");
             return true;
         }
 
@@ -86,7 +87,7 @@ public class ForecastFragment extends Fragment {
         // initialize Array Adapter
         // The ArrayAdapter will take data from a source (like our dummy forecast) and
         // use it to populate the ListView it's attached to.
-        ArrayAdapter<String> forecastAdapter =
+         mForecastAdapter =
                 new ArrayAdapter<String>(
                         getActivity(), // The current context (this activity)
                         R.layout.list_item_forcast, // The name of the layout ID.
@@ -95,7 +96,7 @@ public class ForecastFragment extends Fragment {
 
         // Get a reference to the ListView, and attach this adapter to it.
         ListView listView = (ListView)rootView.findViewById(R.id.listview_forecast);
-        listView.setAdapter(forecastAdapter);
+        listView.setAdapter(mForecastAdapter);
 
         return rootView;
     }
@@ -292,8 +293,27 @@ public class ForecastFragment extends Fragment {
                 }
 
 
-
-
+            /**
+             * <p>Runs on the UI thread after {@link #doInBackground}. The
+             * specified result is the value returned by {@link #doInBackground}.</p>
+             * <p/>
+             * <p>This method won't be invoked if the task was cancelled.</p>
+             *
+             * @param result The result of the operation computed by {@link #doInBackground}.
+             * @see #onPreExecute
+             * @see #doInBackground
+             * @see #onCancelled(Object)
+             */
+            @Override
+            protected void onPostExecute(String[] result) {
+                if (result != null) {
+                    mForecastAdapter.clear();
+                    for(String dayForecastStr : result) {
+                        mForecastAdapter.add(dayForecastStr);
+                    }
+                    // New data is back from the server.  Hooray!
+                }
+            }
         }//End FetchWeatherTask class
 
     }//End ForecastFragment class
