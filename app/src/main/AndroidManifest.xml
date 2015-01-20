@@ -34,6 +34,9 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="org.tekwin.sunshine.MainActivity" />
         </activity>
+        <provider
+            android:authorities="org.tekwin.sunshine.data"
+            android:name=".data.WeatherProvider" />
     </application>
 
 </manifest>
